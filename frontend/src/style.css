@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body { 
+    @apply font-body text-slate bg-white antialiased; 
+  }
+  h1, h2, h3, h4, h5, h6 { 
+    @apply font-heading text-midnight tracking-tight; 
+  }
+  :focus-visible { 
+    @apply outline outline-2 outline-offset-2 outline-royal; 
+  }
+}
+
+@layer components {
+  .btn { 
+    @apply inline-flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm transition-colors duration-200 rounded-sm; 
+  }
+  .btn-primary { 
+    @apply btn bg-royal text-white hover:bg-royal-600; 
+  }
+  .btn-ghost { 
+    @apply btn border border-midnight text-midnight hover:bg-midnight hover:text-white; 
+  }
+  .field { 
+    @apply w-full border border-mist bg-white px-4 py-3 focus:border-royal focus:outline-none rounded-sm; 
+  }
+}
+
+/* Animations personnalisées */
+.fade-enter-active, .fade-leave-active { 
+  transition: opacity .25s ease; 
+}
+.fade-enter-from, .fade-leave-to { 
+  opacity: 0; 
+}
+
+.skeleton { 
+  background: linear-gradient(90deg, #e8edf3 25%, #f4f7fa 50%, #e8edf3 75%); 
+  background-size: 200% 100%; 
+  animation: sk 1.4s infinite; 
+}
+@keyframes sk { 
+  to { background-position: -200% 0; } 
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { 
+    animation-duration: .01ms !important; 
+    transition-duration: .01ms !important; 
+    scroll-behavior: auto !important; 
+  }
+}

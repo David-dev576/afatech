@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+backend/venv/
+.env
+backend/media/
+backend/staticfiles/
+*.sqlite3
+
+# Node / Vite
+node_modules/
+frontend/dist/
+
+# Éditeurs et système
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
