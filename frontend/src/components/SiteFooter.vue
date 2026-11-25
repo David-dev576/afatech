@@ -1,69 +1,77 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import api from '../api'
+import { t } from '../i18n'
 
 const s = ref({ email: 'afatechsolution@gmail.com', phone: '', socials: [] })
 
-onMounted(async () => { 
-  try { 
-    s.value = (await api.get('/settings/')).data 
-  } catch {} 
+onMounted(async () => {
+  try {
+    s.value = (await api.get('/settings/')).data
+  } catch {
+    /* valeurs par défaut conservées */
+  }
 })
 
-const icon = (p) => (['facebook','linkedin','instagram','x-twitter','whatsapp','youtube','github'].includes(p) ? `fa-brands fa-${p}` : 'fa-solid fa-link')
+const icon = (p) =>
+  ['facebook', 'linkedin', 'instagram', 'x-twitter', 'whatsapp', 'youtube', 'github'].includes(p)
+    ? `fa-brands fa-${p}`
+    : 'fa-solid fa-link'
 </script>
 
 <template>
   <footer class="bg-midnight text-mist">
     <div class="mx-auto grid max-w-7xl gap-10 px-5 py-14 md:grid-cols-[2fr_1fr_1fr_1.5fr]">
-      
-      <!-- Colonne 1 : Logo et description -->
+      <!-- Colonne 1 : logo et description -->
       <div>
         <router-link to="/" class="flex items-center gap-3">
-          <!-- VOTRE LOGO ICI -->
-          <img 
-            src="/logo.png" 
-            alt="Logo AFA TECH" 
-            class="h-10 w-10 object-cover rounded-full bg-white p-0.5 shadow-sm"
-          />
-          <span class="font-heading font-bold text-white text-lg tracking-wide">AFA TECH SOLUTIONS</span>
+          <img src="/logo.png" :alt="t('nav.logoAlt')" class="h-10 w-10 rounded-full bg-white object-cover p-0.5 shadow-sm" />
+          <span class="font-display text-lg font-bold tracking-wide text-white">AFA TECH SOLUTIONS</span>
         </router-link>
-        
-        <p class="mt-4 max-w-sm text-sm leading-relaxed">Formation, développement web et mobile, hébergement et conseil pour la transformation digitale de l'Afrique.</p>
-        
+
+        <p class="mt-4 max-w-sm text-sm leading-relaxed">{{ t('footer.description') }}</p>
+
         <div class="mt-5 flex gap-4 text-xl">
-          <a v-for="l in s.socials" :key="l.id" :href="l.url" target="_blank" rel="noopener" :aria-label="l.platform" class="hover:text-white transition-colors">
+          <a
+            v-for="l in s.socials"
+            :key="l.id"
+            :href="l.url"
+            target="_blank"
+            rel="noopener"
+            :aria-label="l.platform"
+            class="transition-colors hover:text-white"
+          >
             <i :class="icon(l.platform)"></i>
           </a>
         </div>
       </div>
 
-      <!-- Colonne 2 : Navigation -->
-      <nav aria-label="Pied de page">
-        <p class="font-heading font-bold text-white">Navigation</p>
+      <!-- Colonne 2 : navigation -->
+      <nav :aria-label="t('footer.aria')">
+        <p class="font-display font-bold text-white">{{ t('footer.navigation') }}</p>
         <ul class="mt-3 space-y-2 text-sm">
-          <li><router-link to="/a-propos" class="hover:text-white transition-colors">À propos</router-link></li>
-          <li><router-link to="/projets" class="hover:text-white transition-colors">Projets</router-link></li>
-          <li><router-link to="/contact" class="hover:text-white transition-colors">Contact</router-link></li>
+          <li><router-link to="/a-propos" class="transition-colors hover:text-white">{{ t('nav.about') }}</router-link></li>
+          <li><router-link to="/projets" class="transition-colors hover:text-white">{{ t('nav.projects') }}</router-link></li>
+          <li><router-link to="/contact" class="transition-colors hover:text-white">{{ t('nav.contact') }}</router-link></li>
         </ul>
       </nav>
 
-      <!-- Colonne 3 : Offres -->
+      <!-- Colonne 3 : offres -->
       <nav>
-        <p class="font-heading font-bold text-white">Offres</p>
+        <p class="font-display font-bold text-white">{{ t('footer.offers') }}</p>
         <ul class="mt-3 space-y-2 text-sm">
-          <li><router-link to="/services" class="hover:text-white transition-colors">Services</router-link></li>
-          <li><router-link to="/formation" class="hover:text-white transition-colors">Formation</router-link></li>
+          <li><router-link to="/services" class="transition-colors hover:text-white">{{ t('nav.services') }}</router-link></li>
+          <li><router-link to="/formation" class="transition-colors hover:text-white">{{ t('nav.training') }}</router-link></li>
         </ul>
       </nav>
 
-      <!-- Colonne 4 : Contact -->
+      <!-- Colonne 4 : contact -->
       <div>
-        <p class="font-heading font-bold text-white">Contact</p>
+        <p class="font-display font-bold text-white">{{ t('footer.contact') }}</p>
         <ul class="mt-3 space-y-2 text-sm">
           <li class="flex items-center">
             <i class="fa-regular fa-envelope mr-2 text-royal"></i>
-            <a :href="`mailto:${s.email}`" class="hover:text-white transition-colors">{{ s.email }}</a>
+            <a :href="`mailto:${s.email}`" class="transition-colors hover:text-white">{{ s.email }}</a>
           </li>
           <li v-if="s.phone" class="flex items-center">
             <i class="fa-solid fa-phone mr-2 text-royal"></i>
@@ -71,12 +79,10 @@ const icon = (p) => (['facebook','linkedin','instagram','x-twitter','whatsapp','
           </li>
         </ul>
       </div>
-
     </div>
 
-    <!-- Copyright -->
     <div class="border-t border-midnight-700 py-5 text-center text-xs">
-      <p>© {{ new Date().getFullYear() }} AFA TECH SOLUTIONS. Tous droits réservés.</p>
+      <p>© {{ new Date().getFullYear() }} AFA TECH SOLUTIONS. {{ t('footer.rights') }}</p>
     </div>
   </footer>
 </template>
